@@ -61,13 +61,13 @@ export async function generateToolPrompt(
   **Do not include ' or line breaks in <parameters as jsonstring> to not break the json in this one-liner.**
   
   \`\`\`bash
-  mcpm-aider call <tool> <function> '<parameters as jsonstring>'
+  mcpm call <tool> <function> '<parameters as jsonstring>'
   \`\`\`
   
   ## *Example*
   \`\`\`bash
   
-  mcpm-aider call @calclavia/mcp-obsidian read_notes '{"paths": ["path/to/notes"]}'
+  mcpm call @calclavia/mcp-obsidian read_notes '{"paths": ["path/to/notes"]}'
   
   \`\`\`
     

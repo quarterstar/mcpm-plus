@@ -45,7 +45,7 @@
           buildInputs = [ pkgs.nodejs ];
 
           meta = {
-            mainProgram = "mcpm-aider";
+            mainProgram = "mcpm";
           };
         };
 

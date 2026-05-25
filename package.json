@@ -1,7 +1,7 @@
 {
-  "name": "@poai/mcpm-aider",
-  "version": "1.2.0",
-  "description": "Your MCP CLI Manager for aider(forked from @mcpm/cli). Helps you install/remove/search your MCP projects. You can also manage your MCP in Claude App with natural language.",
+  "name": "@quarterstar/mcpm-plus",
+  "version": "2.0.0",
+  "description": "All-In-One MCP Client for use in programs like Aider",
   "main": "lib/cli.js",
   "types": "lib/cli.d.ts",
   "files": [
@@ -11,7 +11,7 @@
     "bin/**/*"
   ],
   "bin": {
-    "mcpm-aider": "./bin/index.js"
+    "mcpm": "./bin/index.js"
   },
   "type": "module",
   "scripts": {
@@ -31,19 +31,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lutzleonhardt/mcpm-aider.git"
+    "url": "https://github.com/quarterstar/mcpm-plus.git"
   },
   "license": "AGPL-3.0-only",
   "author": {
-    "name": "Pilots of AI (Lutz Leonhardt)",
-    "email": "kontakt@lutzleonhardt.de",
-    "url": "https://github.com/lutzleonhardt/mcpm-aider"
+    "name": "quarterstar",
+    "email": "quarterstar@proton.me",
+    "url": "https://github.com/quarterstar/mcpm-plus"
   },
   "engines": {
     "node": ">=12.0"
   },
   "keywords": [
-    "aider",
     "boilerplate",
     "cli",
     "template",
@@ -56,9 +55,9 @@
     "codecov"
   ],
   "bugs": {
-    "url": "https://github.com/lutzleonhardt/mcpm-aider/issues"
+    "url": "https://github.com/quarterstar/mcpm-plus/issues"
   },
-  "homepage": "https://github.com/lutzleonhardt/mcpm-aider#readme",
+  "homepage": "https://github.com/quarterstar/mcpm-plus#readme",
   "contributors": [
     {
       "name": "MCP Club",
