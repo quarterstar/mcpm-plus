@@ -8,7 +8,7 @@
 import { HostService, HostType } from '@mcpm/sdk';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { buildTransportForServer } from './transportHelper.js';
-import Ajv from 'ajv';
+import Ajv from 'ajv/dist/2020.js';
 
 export async function callToolFunction(
   tool: string,
@@ -18,17 +18,21 @@ export async function callToolFunction(
   const claudeSrv = HostService.getInstanceByType(HostType.CLAUDE);
   const server = await claudeSrv.getMCPServerWithStatus(tool);
   if (!server || !server.enabled) {
-    throw new Error(`MCP server with identifier '${tool}' is not available or not enabled.`);
+    throw new Error(
+      `MCP server with identifier '${tool}' is not available or not enabled.`
+    );
   }
 
   // Validate parameters
   if (typeof parameters !== 'object' || parameters === null) {
-    throw new Error("Invalid parameters: Expected a JSON object. Please check your JSON formatting.");
+    throw new Error(
+      'Invalid parameters: Expected a JSON object. Please check your JSON formatting.'
+    );
   }
 
   // Debug log if environment variable DEBUG is set
   if (process.env.DEBUG) {
-    console.debug("Transport configuration (server arguments/env):", {
+    console.debug('Transport configuration (server arguments/env):', {
       args: server.info.appConfig.args,
       env: server.info.appConfig.env,
     });
@@ -50,12 +54,17 @@ export async function callToolFunction(
       const ajv = new Ajv();
       const validate = ajv.compile(toolInfo.inputSchema);
       if (!validate(parameters)) {
-        throw new Error('Invalid parameters: ' + ajv.errorsText(validate.errors));
+        throw new Error(
+          'Invalid parameters: ' + ajv.errorsText(validate.errors)
+        );
       }
     }
 
     // Call the tool function
-    const result = await client.callTool({ name: functionName, arguments: parameters });
+    const result = await client.callTool({
+      name: functionName,
+      arguments: parameters,
+    });
     console.log('Tool call result:', result);
   } catch (error) {
     console.error(
