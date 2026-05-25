@@ -123,3 +123,5 @@ lib/
 
 # Aider related files
 .aider*
+
+.direnv
