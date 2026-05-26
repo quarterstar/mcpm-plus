@@ -9,6 +9,7 @@ import { HostService, HostType } from '@mcpm/sdk';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { buildTransportForServer } from './transportHelper.js';
 import Ajv from 'ajv/dist/2020.js';
+import draft7MetaSchema from 'ajv/dist/refs/json-schema-draft-07.json' with { type: 'json' };
 
 export async function callToolFunction(
   tool: string,
@@ -52,6 +53,9 @@ export async function callToolFunction(
     if (toolInfo && toolInfo.inputSchema) {
       // @ts-ignore: Ajv works at runtime despite the TypeScript error
       const ajv = new Ajv();
+
+      ajv.addMetaSchema(draft7MetaSchema);
+
       const validate = ajv.compile(toolInfo.inputSchema);
       if (!validate(parameters)) {
         throw new Error(
