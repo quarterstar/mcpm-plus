@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2024 PoAI (Lutz Leonhardt)
+ * Copyright (C) 2024 PoAI (Lutz Leonhardt), quarterstar (quarterstar@proton.me)
  * This file is part of mcpm, based on work by MCP Club
  * Licensed under the GNU AGPL v3.0
  * See LICENSE file for details
@@ -8,6 +8,7 @@
 import { HostService, HostType } from '@mcpm/sdk';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { buildTransportForServer } from './transportHelper.js';
+import { createMcpClient } from "./client.js";
 import Ajv from 'ajv/dist/2020.js';
 import draft7MetaSchema from 'ajv/dist/refs/json-schema-draft-07.json' with { type: 'json' };
 
@@ -24,14 +25,12 @@ export async function callToolFunction(
     );
   }
 
-  // Validate parameters
   if (typeof parameters !== 'object' || parameters === null) {
     throw new Error(
       'Invalid parameters: Expected a JSON object. Please check your JSON formatting.'
     );
   }
 
-  // Debug log if environment variable DEBUG is set
   if (process.env.DEBUG) {
     console.debug('Transport configuration (server arguments/env):', {
       args: server.info.appConfig.args,
@@ -39,15 +38,12 @@ export async function callToolFunction(
     });
   }
 
-  // Use the helper to build the transport with proper environment and placeholder replacement
   const transport = buildTransportForServer(server);
 
   try {
-    // No need to explicitly start the transport; Client.connect() calls start() automatically.
-    const client = new Client({ name: tool, version: '1.0.0' });
+    const client = await createMcpClient(tool);
     await client.connect(transport);
 
-    // Validate parameters against tool schema
     const toolsResponse = await client.listTools();
     const toolInfo = toolsResponse.tools.find(t => t.name === functionName);
     if (toolInfo && toolInfo.inputSchema) {
@@ -64,7 +60,6 @@ export async function callToolFunction(
       }
     }
 
-    // Call the tool function
     const result = await client.callTool({
       name: functionName,
       arguments: parameters,
